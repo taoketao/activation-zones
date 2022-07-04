@@ -17,8 +17,8 @@ nonlinearity, and different nonlinearities have these points at different
 values. This program examines several nonlinearities and plots their points.
 This can help inform what kind of nonlinearity is best or worst for a
 situation, and it also demonstrates that these points are not bijectively
-unique to a nonlinearity. Currently, it examines: tanh (and therefore 
-logistic), erf, the analytic x/(1+x^p)^(1/p) family, arctan, a odd 
-exponential-based sigmoid, an odd parametric sigmoid, the Guddermann 
-function, and it identifies critical points linked to max signal strength, 
-noise tolerance and sensitivity, and the point-of-no-unlearning.
+unique to a nonlinearity. It identifies critical points linked to max signal  
+strength,  noise tolerance and sensitivity, and the point-of-no-unlearning.
+Currently, it examines: tanh (and therefore logistic), erf, the analytic 
+x/(1+x^p)^(1/p) family, arctan, a odd exponential-based sigmoid, an odd 
+parametric sigmoid, the Guddermann function. 

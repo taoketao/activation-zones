@@ -1,0 +1,52 @@
+Commentary and notes for the figures of the plots that compare important points of different activation functions.
+
+Definitions of the different activation functions, f(x):
+tanh:       the hyperbolic tangent, \frac{\left(e^{x}-e^{-x}\right)}{e^{x}+e^{-x}}
+erf:        The error function, the integral of a gaussian up to scalings
+p=2:        Refers to the sigmoidal curve f(x)=x/(1+x^2)^(1/2). This curve is interesting especially because it is fully algebraic true sigmoid.
+p=...:      x/(1+|x|^p)^(1/p) is the general pattern. Consider x and p to be reals, and let z^p>0 be defined if z,p>0 for convenience.
+exp*:       Basically, take the decreasing function e^-x,x>0 and use it to build a sigmoid. Specifically, f(x)={x>0: 1-e^-x. x<=0: e^x-1} = odd extension of {1-e^-x, x>=0}.
+gudder:     Defined as arctan(tanh(x))*4/pi, the Guddermann function.
+x-x^2*:     odd extension of {0<x<2: x-x^2/4; else 1}
+relu:       max(0,x)
+ 
+
+Other commentary about the activation functions:
+- For our purposes, a sigmoid is a function f:Reals->[-1,1] that is monotonically increasing, continuous for at least 4 derivatives (with permitted exceptions at origin or if ever f(x)=+/-1 and we label these with a star *), and whose closure is [-1,1].
+- 'Odd function' defined as f: f(x)=-f(-x), or is 180-degree rotationally symmetric about origin.
+- tanh(x) = 2*( logistic_function(x) - 1) = 2( 1/(1+e^-x) - 1 ). Since we are concerned with odd functions and the special points are the same, we suffice to only discuss tanh. Alternative versions of tanh, such as -1+2/(1+2^-x) or -1+2/(1+10^-x), which may be much more computationally efficient, still retain the ratios of special points' values.
+- 'p=1' and 'exp*' are two plotted curves whose points are all equally spaced. Specifically, in exp*, if you replaced 'e' with '2', you'd get (0,1,2,3) as your sequence. With '4', you'd get the same profile as p=1. That is to say: special point 'spectra' do not correspond to unique sigmoid functions. 
+- When p>4.37, x/(1+x^p)^(1/p) beta<alpha<1. Proof of concept that they can swap. Graphically, this corresponds with the higher p values expressing a wider and wider linear zone coincident with function y=x.
+- xrootx: the odd extension of {0<x<e^(1/e)=1.444: x^(1/|x|); else 1}.  
+  Unlike the other sigmoids analyzed, xrootx approaches flatness near zero (as do its derivatives, unproven), and stays that small for a substantial duration: f(.2)<.0003; f(.4)~=.1. And its derivatives are also numerically 0 below 0.1, meaning drift is as ineffectual as signal for gradient methods. 
+  Specifically, in addition to the alpha below zero there's a second positive-valued local maxima at 0.56*alpha; like delta, D4 crosses zero at x=0.1906, so in practice you should consider whether you want to shift your x left towards 0 or want to keep f(x:|x|<0.2)~=0 (feature or bug?). 
+  Also, there is another beta at 1.572 and more special points farther out especially without artificially setting f(x>1.444)=1 (although they do get very small).
+
+
+What the points represent:
+    Preliminary definitions:
+    - D2 := d/dt w_ij = (y_i-sigm(v_i))*(d/dv_i sigm(v_i))*x_j, where v_i = w_i.dot(x). D2 is named so because for some sigmoids, D2 = d^2/dt^2 sigm().  Parameters used: y_i=0, w_i.dot(x)=1, x_j=1. 
+    - Define D4 := d^2/dw^2 (D2). 
+    - 'training noise': any source of variability that makes weights walk up and down. e.g. batch learning, imperfect data, numerical artifacts of learning rate, or interdependence of weights on each other.
+
+    alpha: the place where curvature (=|D4|) is maximal, corresponding to weights most sensitive to training noise.
+    beta: the peak of D2, where weights change the most per signal and is an unstable equilibrium.
+    gamma: D4 crosses zero and D2 is linear; this is a region where weights are robust against training noise.
+    delta: a distal local peak/trough of D4 where weights are unusually sensitive to noise. Beyond it, weights are 'lost'.
+
+Errata:
+The main plot should have x axis labeled (v_i)
+
+Raw data:
+'tanh':    [0.421, 0.658, 1.146, 1.572]
+'erf':     [0.488, 0.620, 1.076, 1.456]
+'p=2':     [0.325, 0.577, 1.000, 1.376]
+'exp*':    [0.001, 0.693, 1.386, 2.079]
+'arctan':  [0.379, 0.765, 1.330, 1.847]
+'Gudder':  [0.284, 0.496, 0.877, 1.228]
+'p=1':     [0.001, 0.500, 1.000, 1.500]
+'p=1.5':   [0.161, 0.543, 1.000, 1.432]
+'p=4.37':  [0.680, 0.681, 1.000, 1.228]
+'x-x^2*':  [0.000, 0.845, 2.000, None ]
+'xrootx*': [0.676, 0.832, 1.158, 1.462] # another alpha/delta at 0.383
+'relu':    [None , 0.000, None , None ]

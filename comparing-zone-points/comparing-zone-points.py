@@ -15,6 +15,8 @@ d = {\
         'p=1':     [0.001, 0.500, 1.000, 1.500],\
         'p=1.5':   [0.161, 0.543, 1.000, 1.432],\
         'p=4.37':  [0.680, 0.681, 1.000, 1.228],\
+        'x-x^2*':  [0.000, 0.845, 2.000, None ],\
+        'xrootx*': [0.249, 0.306, 0.426, 0.538],\
         'relu':    [0, 0,0,0],\
     }
 titles_ordered=['tanh'  ,'erf'  ,'p=2'  ,'exp*'  ,'arctan'  ,'Gudder'  ,'p=1'  ,'p=1.5'  ,'p=4.37', 'relu' ][::-1]
@@ -49,11 +51,11 @@ plt.xticks([0,0.5,1,1.5,2,2.5])
 plt.title('** version: alternative presentation for more easily picturing zones. **\n'+\
         'Analyzing zone-determining special points of the upper half of sigmoidal activation functions. \n'+\
     'Define D2 := d/dt w_ij = (y_i-sigm(v_i))*(d/dv_i sigm(v_i))*x_j, where v_i = w_i.dot(x).  \n'+\
-    '(D2 is named so because for some sigmoids, D2 = d^2/dt^2 sigm().) Define D4 := d^2/dw^2. \n'+\
-    'alpha: the place where curvature is maximal, corresponding to weights most sensitive to training noise.\n'+\
-    'beta: the peak of D2, where weights change the most per signal and is an unstable equilibrium from drift.\n'+\
+    '(D2 is named so because for some sigmoids, D2 = d^2/dt^2 sigm().) Define D4 := d^2/dw^2 (D2). \n'+\
+    'alpha: the place where curvature (=|D4|) is maximal, corresponding to weights most sensitive to training noise.\n'+\
+    'beta: the peak of D2, where weights change the most per signal and is an unstable equilibrium.\n'+\
     'gamma: D4 crosses zero and D2 is linear; this is a region where weights are robust against training noise.\n'+\
-    "delta: a distal local peak/trough where weights are unusually sensitive to noise. Beyond it, weights are 'lost'.\n"+\
+    "delta: a distal local peak/trough of D4 where weights are unusually sensitive to noise. Beyond it, weights are 'lost'.\n"+\
     "Parameters: y_i=0, w_i.dot(x)=1, x_j=1. ('training noise': any source of variability that makes weights walk up and down. \n"+\
     'e.g. batch learning, imperfect data, numerical artifacts of learning rate, or interdependence of weights on each other.)\n'+\
     '', fontdict={'fontsize':8})
