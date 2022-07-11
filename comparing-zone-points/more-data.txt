@@ -1,0 +1,63 @@
+
+For s(x), calculate s(beta), the peak of D2. Then draw curve [s(x)*d/dx(s(x))]/s(beta)
+Then calculate s(alpha), the peak of D4  Then draw curve d^2/dx^2 [s(x)*d/dx(s(x))]/s(alpha).
+What then are the gamma and delta?
+
+         alpha  D4(alph) beta   D2(beta) D4(delt) D2(gamma) D4(beta) D2(alpha)
+erf     0.4478  -2.8144  0.6201  0.4759  0.2426    0.6501   -0.8583  0.9186                    
+tanh    0.4213  -2.0429  0.6585  0.3847  0.1439    0.7075   -0.7536  0.8707          
+p=2     0.3249  -2.3343  0.5774  0.3248  0.0902    0.7697   -0.626   0.8336        (.5774 sic, desmos)
+exp*    0       -3       0.6931  1/4     0.0208    3/4      -1/6     0           
+arctan  0.3792  -1.7959  0.4119  0.7654  0.0568    0.8103   -0.503   0.7691             
+x-x^2*  0       -1.5     0.8453  0.3849  n/a       0        -0.5774  0            
+xrootx* 0.6765  -14.718  0.8322  1.0992  0.08664   0.7463   -0.6429  0.8707        (0.3832, 21.964) lies on the curve. D2(0.3832) is 0.07981
+gudder  0.2836  -2.706   0.4958  0.2805  0.1026    0.7360   -0.6531  0.8246
+
+Here, we divided D2(x) by D2(beta) to normalize the peaks for further calculations of the other points,
+and we divided D4(x) by D4(alpha) to normalize their peaks too for further calculations.
+D4(alpha) is given after dividing by s(beta), s.t. s_modif(beta)=1.
+Likewise, D4(delta) and D2(gamma) is calculated relative to dividing D4 by |s(alpha)|.
+
+observations
+- tanh and erf have the highest relative peaks s(delta), meaning stronger no-return
+policy but stronger resistance up to that point. The others all demonstrate that
+an increase in delta causes a decrease in s(delta) - but tanh and erf live above
+that curve. Their deltas being high-valued also inhibits escaping weights better. 
+- The others, not tanh and erf, show a gradual decline from their beta peaks. (Would
+it be worthwhile adjusting the x values too?). tanh and erf die faster, relatively, 
+(erf more so), meaning they have a sharper smaller Zone C where weights receive high
+signal, whereas the others can pass more signal to weights farther from beta/Zone C.
+(Zones. A:near 0 lineary; B:near alpha; C:near beta; D:before gamma; E:at gamma; F:
+final peak near delta; G: point of no return and perpetual entrenchment)
+- D2(gamma): % of max signal when drift is zero. D4(beta): noise forces strength at 
+  signal mountaintop. D2(alpha): % of max signal when noise is at its own max.
+- D2(gamma), or the amount of max possible signal that gets thru when noise is minimal,
+is highest for arctan, lowest for erf, and similar for all (except x-x^2*).
+(it follows: alpha is high in er    ....
+I guess this means that arctan is most likely to oscillate and has a error and noise 
+tradeoff better? D2(alpha) concords with this, that at alpha=max noise point, the 
+signal arctan is weaker than any nondegenerate ones, as does D4(beta), which reports 
+that noise rate is relatively weak at this 100% signal strength spot.
+=> with a fixed signal-to-noise ratio, you might expect arctan to put weights into
+emergent competitive attractors between D4 and D2 forces, and if the SNR changes 
+then arctan might change more than others would? arctan might also work better with
+larger step sizes.
+- erf and tanh both have more specialization as weight value increases - the predominant
+dynamic at the special points supresses the other more. 
+- p=2 might be more noise tolerant overall and comparatively especially with smaller 
+weights. This might be due to its extensive signal response range, as indicated by its
+small D2(beta) factor==multiplication factor of the integrand summing to 1 in the limit.
+gudder is similar but less pronounced.
+- disregarding xrootx*, which is zero until 0.2 and has unique dynamics, and somewhat
+degenerate x-x^2* , arctan has the furthest-out beta. Maybe a slow ramp-up or alpha about 
+half of beta contributes to it having a large raw strength in beta as well as extended,
+with delta also far out. I guess it could be helpful maybe for v_i expected to have 
+many large values and a need for large zones closer to equally sized.
+- side observation: when exp* and p=1 are scaled to both's beta peaks align at (0.5,1),
+p=1 unanimously decays faster than exp* does. By a lot!
+
+questions: 
+- what is 0.5774 with regard to x^2 or sqrt(x)?
+- is 0.8707 coincidence?
+- does it make sense to make the zone b-c cutoff the point where SNR is 1?
+

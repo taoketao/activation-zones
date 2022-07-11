@@ -1,20 +1,32 @@
 Commentary and notes for the figures of the plots that compare important points of different activation functions.
 
-What is being plotted:
+Explanation of what is being plotted.
     Preliminary definitions:
+    - A simple neural network, the object of this study, computes
+      y_hat = sigma(Wx) and receives least-squares error signal
+      (y_true - y_hat) in order to train with gradient descent.
     - D2 := d/dt w_ij = (y_i-sigm(v_i))*(d/dv_i sigm(v_i))*x_j, where 
-     v_i = w_i.dot(x). D2 is named so because for some sigmoids, 
-     D2 = d^2/dt^2 sigm().  Parameters used: y_i=0, w_i.dot(x)=1, x_j=1. 
-     For convenience, from now on we'll replace 'v_i' with generic 'x'. 
+      v_i = w_i.dot(x). D2 is named so because for some sigmoids, 
+      D2 = d^2/dt^2 sigm().  Parameters used: y_i=0, w_i.dot(x)=1, x_j=1. 
+      For convenience, from now on we'll replace 'v_i' with generic 'x'. 
+      This function D2 charts the change of a weight of a neural network
+      via the backpropagation signal, with (for simplicity) each y_true=0.
     - Define D4 := d^2/dw^2 (D2). 
     - 'training noise': any source of variability that makes weights walk up 
       and down. e.g. batch learning, imperfect data, numerical artifacts of 
       learning rate, or interdependence of weights on each other.
+    - A 'sigmoidal function' is odd, monotonic increasing and openly covers (-1,1).
+      Also, it needs to be continuous and four times differentiable.
+      The best candidates are additionally Lipschitz 1 and concave if >0 and convex
+      if <0, ideally everywhere but with admissable exceptions at 0, and D2 and D4 exist. 
+      The interesting ones have a D2 that is a nice bell curve and nonzero D4. 
     D2 is intimately related to how receptive a weight is to a backpropagated
     error signal. It should be noted that D2 does change shape depending on y_i.
     D4 is related to perturbations of weights from training noise, in contrast
     to signals. I might informally call this 'drift' or 'diffusion' or 'jitter'.
     Notably, under symmetric expected noise, this effect is *not* affected by y_i.
+    Plotted: (v_i == w_i.dot(x) , special values of v_i under this nonlinearity)
+    where we assume that x_j and w_ij are finite and nonzero.
 
 What the points represent:
   - alpha: the place where curvature (-D4) is maximal. Weights at this value are most sensitive to training noise.
@@ -31,8 +43,10 @@ p=...:      x/(1+|x|^p)^(1/p) is the general pattern. Consider x and p to be
             reals, and let z^p>0 be defined if z,p>0 for convenience.
 exp*:       Basically, take the decreasing function e^-x,x>0 and use it to build a sigmoid. 
             Specifically, f(x)={x>0: 1-e^-x. x<=0: e^x-1} = odd extension of {1-e^-x, x>=0}.
-gudder:     Defined as arctan(tanh(x))*4/pi, the Guddermann function.
+gudder:     Defined as arctan(tanh(x))*4/pi, the Guddermannian function.
 x-x^2*:     odd extension of {0<x<2: x-x^2/4; else 1}
+xrootx*:    odd extension of { x^(1/x) }, as contrast: it is approx *flat* between [-.2,.2]
+xrootx2:    like xrootx* but nicer; see below
 relu:       max(0,x)
  
 
@@ -69,7 +83,8 @@ Other commentary about the activation functions:
 
 
 Errata:
-The main plot should have x axis labeled (v_i)
+The main plot should have x axis labeled  v_i  ( = \sum{j}(w_ij*x_j) )
+The main plot should have y axis labeled  special values v_i under nonlinearity \sigma
 
 Raw data:
 'tanh':    [0.421, 0.658, 1.146, 1.572]
@@ -82,5 +97,13 @@ Raw data:
 'p=1.5':   [0.161, 0.543, 1.000, 1.432]
 'p=4.37':  [0.680, 0.681, 1.000, 1.228]
 'x-x^2*':  [0.000, 0.845, 2.000, None ]
-'xrootx*': [0.676, 0.832, 1.158, 1.462] # another alpha/delta at 0.383
+'xrootx*': [0.676, 0.832, 1.158, 1.462] # another D4 local peak at 0.383
 'relu':    [None , 0.000, None , None ]
+
+Other:
+xrootx2: \sigma(x)=sign(x)*|x|^(1/(1+|x|)), a variant of
+xrootx that plays a little nicer around 0: d/dx looks *vaguely* like
+N(-0.1, 0.1) + N(0.1, 0.1) where N is a bell curve distribution.
+           [0.298, 0.561, 1.000, 1.419] 
+           (technically, curvature is maximum (infinity) at 0-\epsilon
+            and -infinity at 0+\epsilon, \epsilon>0 -> 0 )
