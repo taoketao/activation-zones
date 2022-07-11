@@ -11,7 +11,9 @@ dl.append( {'erf':     [0.488, 0.620, 1.076, 1.456] } )
 dl.append( {'p=2':     [0.325, 0.577, 1.000, 1.376] } )
 dl.append( {'exp*':    [0.001, 0.693, 1.386, 2.079] } )
 dl.append( {'arctan':  [0.379, 0.765, 1.330, 1.847] } )
-dl.append( {'Gudder':  [0.284, 0.496, 0.877, 1.228] } )
+dl.append( {'Guder':   [0.284, 0.496, 0.877, 1.228] } )
+#dl.append( {'Bump':    [0.613, 0.485, 0.782, 0.896] } )
+#dl.append( {'Guder2':  [0.567, 0.992, 1.753, 2.455] } )
 dl.append( {'p=1':     [0.001, 0.500, 1.000, 1.500] } )
 dl.append( {'p=1.5':   [0.161, 0.543, 1.000, 1.432] } )
 dl.append( {'p=4.37':  [0.680, 0.681, 1.000, 1.228] } )
@@ -27,7 +29,9 @@ for dl_entry in dl:
     d.update(dl_entry)
 #colors_ = ['blue', 'cyan', 'lightseagreen', 'blueviolet', 'violet',
 #           'mediumvioletred', 'peru', 'coral', 'tomato', 'black'][::-1]
-colors_ = ['blue', 'cyan', 'lightseagreen', 'blueviolet', 'violet', 'mediumvioletred',
+colors_ = ['blue', 'cyan', 'lightseagreen', 'blueviolet', 'violet',
+           'mediumvioletred',
+#           'gold', #'mediumvioletred',
            'lightseagreen','lightseagreen', 'lightseagreen', 'coral', 'peru', 'maroon',
            'gray'][::-1]
 if not len(colors_) == len(d):
@@ -131,7 +135,8 @@ plt.annotate(r'Left: typical shapes of' , (0,0),  (captn_x,captn_y), fontsize=6)
 #plt.annotate(r'D2($v_i$) (green), D4($v_i$) (red).'  ,  (0,0), (captn_x,captn_y-.5), fontsize=6) #(0.4,-0.25), (1.6,0.3),
 plt.annotate(r'D2($v_i$)' ,  (0,0), (captn_x,captn_y-.5), color=color1, fontsize=7) #(0.4,-0.25), (1.6,0.3),
 plt.annotate(r'&' ,  (0,0), (captn_x+.125,captn_y-.5), color='black', fontsize=6) #(0.4,-0.25), (1.6,0.3),
-plt.annotate(r'D4($v_i$)' ,  (0,0), (captn_x+.15,captn_y-.5), color=color2, fontsize=7) #(0.4,-0.25), (1.6,0.3),
+plt.annotate(r'D4($v_i$)' ,  (0,0), (captn_x+.16,captn_y-.5), color=color2, fontsize=7) #(0.4,-0.25), (1.6,0.3),
+plt.annotate(r', $y_i$=0' ,  (0,0), (captn_x+.28,captn_y-.5), color='black', fontsize=6) #(0.4,-0.25), (1.6,0.3),
 plt.annotate( 'Right: locations of' ,  (0,0), (captn_x,captn_y-1.2), fontsize=6) #(0.4,-0.25), (1.6,0.3),
 plt.annotate( 'special points.' ,  (0,0), (captn_x,captn_y-1.7), fontsize=6) #(0.4,-0.25), (1.6,0.3),
 plt.annotate( '(Curves are not' ,  (0,0), (captn_x,captn_y-2.5), fontsize=6) #(0.4,-0.25), (1.6,0.3),

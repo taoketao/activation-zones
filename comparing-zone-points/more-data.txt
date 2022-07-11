@@ -33,7 +33,7 @@ final peak near delta; G: point of no return and perpetual entrenchment)
   signal mountaintop. D2(alpha): % of max signal when noise is at its own max.
 - D2(gamma), or the amount of max possible signal that gets thru when noise is minimal,
 is highest for arctan, lowest for erf, and similar for all (except x-x^2*).
-(it follows: alpha is high in er    ....
+(it follows: alpha is high in er    ....?
 I guess this means that arctan is most likely to oscillate and has a error and noise 
 tradeoff better? D2(alpha) concords with this, that at alpha=max noise point, the 
 signal arctan is weaker than any nondegenerate ones, as does D4(beta), which reports 

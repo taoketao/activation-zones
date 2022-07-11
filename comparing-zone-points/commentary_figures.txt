@@ -5,45 +5,60 @@ Explanation of what is being plotted.
     - A simple neural network, the object of this study, computes
       y_hat = sigma(Wx) and receives least-squares error signal
       (y_true - y_hat) in order to train with gradient descent.
-    - D2 := d/dt w_ij = (y_i-sigm(v_i))*(d/dv_i sigm(v_i))*x_j, where 
-      v_i = w_i.dot(x). D2 is named so because for some sigmoids, 
-      D2 = d^2/dt^2 sigm().  Parameters used: y_i=0, w_i.dot(x)=1, x_j=1. 
-      For convenience, from now on we'll replace 'v_i' with generic 'x'. 
-      This function D2 charts the change of a weight of a neural network
-      via the backpropagation signal, with (for simplicity) each y_true=0.
-    - Define D4 := d^2/dw^2 (D2). 
-    - 'training noise': any source of variability that makes weights walk up 
-      and down. e.g. batch learning, imperfect data, numerical artifacts of 
-      learning rate, or interdependence of weights on each other.
-    - A 'sigmoidal function' is odd, monotonic increasing and openly covers (-1,1).
-      Also, it needs to be continuous and four times differentiable.
-      The best candidates are additionally Lipschitz 1 and concave if >0 and convex
-      if <0, ideally everywhere but with admissable exceptions at 0, and D2 and D4 exist. 
+    - A 'sigmoidal function' is odd, monotonic increasing and 
+      openly covers (-1,1). Also, it needs to be continuous and 
+      four times differentiable. The best candidates are additionally 
+      Lipschitz 1 and concave if >0 and convex if <0, ideally 
+      everywhere but with admissable exceptions at 0, and D2 and D4 exist.  
       The interesting ones have a D2 that is a nice bell curve and nonzero D4. 
-    D2 is intimately related to how receptive a weight is to a backpropagated
-    error signal. It should be noted that D2 does change shape depending on y_i.
-    D4 is related to perturbations of weights from training noise, in contrast
-    to signals. I might informally call this 'drift' or 'diffusion' or 'jitter'.
-    Notably, under symmetric expected noise, this effect is *not* affected by y_i.
-    Plotted: (v_i == w_i.dot(x) , special values of v_i under this nonlinearity)
-    where we assume that x_j and w_ij are finite and nonzero.
+    - D2 := d/dt w_ij = (y_i-sigm(v_i))*(d/dv_i sigm(v_i))*x_j, where 
+      v_i = w_i.dot(x). D2 is named so because for some sigmoids (e.g. tanh),
+      D2 = d^2/dt^2 sigm()/-2.  Parameters used: y_i=0, {{ w_i.dot(x)=1, x_j=1. }} <= erratum ??
+      For convenience, from now on we'll often replace 'v_i' with generic 'x'
+      where it's unambiguous.
+      This function D2 charts the backpropagation signal received by a weight 
+      of a neural network based on v_i contributed to by the weight,
+      for a given y_i. That is, change-per-epoch of w_ij is, with learning 
+      rate l: w_ij^(t+1) = w_ij^(t)*(1-l*D2(v_i)*x_j).
+      Try not to worry about whether we are gradient-descending or ascending D2;
+      the analysis just picks the obvious correct choice that decreases error.
+      D2 is intimately related to how receptive a weight is to a backpropagated
+      error signal. It should be noted that D2 does change shape depending on y_i;
+      here, we are only looking at the foundational case, y_i=0.
+    - Define D4 := d^2/dv_i^2 (D2). 
+      D4 is related to perturbations of weights from training noise, in contrast
+      to signals. I might informally call this 'drift' or 'diffusion' or 'jitter'.
+      Notably, under y_i={-1 w.p. 1/2, +1 w.p. 1/2} noise, this effect is *not* affected 
+      by a choice of y_i. I suspect it's true for other kinds of symmetric expected noise
+      of y_i, such as noise derived from batch selection,
+      but I'm unsure what happens if the noise comes from perturbed x_j or x_j & y_i.
+    - 'training noise': any source of variability that makes weights walk back and
+      forth, instead of progressing via a signal. ('walk' picked intentionally; cf random walks)
+      Some sources of training noise I've identified: batch learning, numerical artifacts of 
+      learning rate, interdependence of weights on each other over many epochs, or imperfect 
+      data (ie, most obviously, dataset contains contradictory (x,y=1) and (x,y=-1))
 
 What the points represent:
   - alpha: the place where curvature (-D4) is maximal. Weights at this value are most sensitive to training noise.
   - beta: the peak of D2, where weights change the most per signal and is an unstable equilibrium.
   - gamma: D4 crosses zero and D2 is linear; this is a region where weights are robust against training noise.
   - delta: a distal local peak/trough of D4 where weights are unusually sensitive to noise. Beyond it, weights are 'lost'.
+  These points are chosen on the restricted subset of v_i>0 => D2(v_i)>0 (or D2<0; whatever makes the numbers work)
 
-Definitions of the different activation functions, f(x):
-tanh:       the hyperbolic tangent, \frac{\left(e^{x}-e^{-x}\right)}{e^{x}+e^{-x}}
+Definitions of the different activation functions:
+tanh:       the hyperbolic tangent, \frac{\left(e^{x}-e^{-x}\right)}{e^{x}+e^{-x}}. 
+            Since the logistic function is a vertically linearly scaled tanh, all
+            our conclusions about tanh broadly apply to the logistic function.
 erf:        The error function, the integral of a gaussian up to scalings
-p=2:        Refers to the sigmoidal curve f(x)=x/(1+x^2)^(1/2). This curve is  
+p=2:        Refers to the f(x)=x/(1+x^2)^(1/2), ie x/sqrt(1+x^2). This curve is  
             interesting especially because it is fully algebraic true sigmoid.
 p=...:      x/(1+|x|^p)^(1/p) is the general pattern. Consider x and p to be 
             reals, and let z^p>0 be defined if z,p>0 for convenience.
+            As p->infinity, alpha and beta and delta converge to gamma=1.
+guder:      Defined as arctan(tanh(x))*4/pi, characteristically the Gudermannian function.
+bump:       The integral of a bump function exp( 1/( x^2-1 ))
 exp*:       Basically, take the decreasing function e^-x,x>0 and use it to build a sigmoid. 
             Specifically, f(x)={x>0: 1-e^-x. x<=0: e^x-1} = odd extension of {1-e^-x, x>=0}.
-gudder:     Defined as arctan(tanh(x))*4/pi, the Guddermannian function.
 x-x^2*:     odd extension of {0<x<2: x-x^2/4; else 1}
 xrootx*:    odd extension of { x^(1/x) }, as contrast: it is approx *flat* between [-.2,.2]
 xrootx2:    like xrootx* but nicer; see below
@@ -83,8 +98,7 @@ Other commentary about the activation functions:
 
 
 Errata:
-The main plot should have x axis labeled  v_i  ( = \sum{j}(w_ij*x_j) )
-The main plot should have y axis labeled  special values v_i under nonlinearity \sigma
+Typo: 'gudder' and 'Gudder' inaccurately refer to The Gudermannian Function.
 
 Raw data:
 'tanh':    [0.421, 0.658, 1.146, 1.572]
@@ -98,12 +112,36 @@ Raw data:
 'p=4.37':  [0.680, 0.681, 1.000, 1.228]
 'x-x^2*':  [0.000, 0.845, 2.000, None ]
 'xrootx*': [0.676, 0.832, 1.158, 1.462] # another D4 local peak at 0.383
+'xrootx2': [0.298, 0.561, 1.000, 1.419]
 'relu':    [None , 0.000, None , None ]
 
 Other:
-xrootx2: \sigma(x)=sign(x)*|x|^(1/(1+|x|)), a variant of
-xrootx that plays a little nicer around 0: d/dx looks *vaguely* like
-N(-0.1, 0.1) + N(0.1, 0.1) where N is a bell curve distribution.
+xrootx2: \sigma(x)=sign(x)*|x|^(1/(1+|x|)), a variant of xrootx that plays a little nicer near 0.
+We basically buffered the exponent's root part so that it doesn't go to 0 exponentially fast near 0. 
+d/dx looks *vaguely* like N(-0.1, 0.1) + N(0.1, 0.1) where N is a bell curve distribution.
            [0.298, 0.561, 1.000, 1.419] 
            (technically, curvature is maximum (infinity) at 0-\epsilon
             and -infinity at 0+\epsilon, \epsilon>0 -> 0 )
+Actual Gudermannian function, f(x)=2*arctan(tanh(x/2)):
+           [.3699, .6028, 1.0563, 1.4609]
+     These values are not related to those of 'Gudder' above in a simple way.
+     WAIT never mind i screwed it up. try again:
+           [0.567, 0.992, 1.753, 2.455]
+     Now, these special points are exactly 2x 'Gudder'.
+     The previous ones were for 2*arctan(0.5*tanh(x)) - not the same!
+     The derivative of gudermann is sech, 2/(e^x+e^-x).
+
+Bump function integral (the only other missed one on wikipedia's page 
+    'bump-shaped functions', besides Student's t which generalizes/interpolates
+    Gaussian and Cauchy using Gamma and hypergeometric functions):
+    d/dx s(x) = { e^( b^2 / (x^2-b^2) ), -b<x<b; 0 otherwise }
+    For b=1:
+    alpha: (0.6131, 2.7192)     beta:  (0.4848, 0.1768)
+    gamma: (0.7823, 0)          delta: (0.8956, 6.856)
+    Observe that beta < alpha and D4(alpha)>D4(delta). Also, this has 
+    *not* been vertically normalized, s(x;b=1) goes from [-.444, .444]. whatever.
+    beta x2 => alpha, beta, gamma, delta coords go (x2, /2) conveniently.
+    This is also impractical since the s(x) does not have a simple form.
+    Is basically a Gaussian squeezed onto a unit disk when b=1.
+    integral of e^(-1/(1-|x|))/{normz_constant~=1.48485} plays nicer: while D4 is
+    discontinuous at 0 (D2 is nice), alpha<beta(=1/3) and D4(alpha)<D4(delta).
