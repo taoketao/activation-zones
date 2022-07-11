@@ -48,3 +48,46 @@ Part 2. Extensions.
 To jupyter or to not jupyter... matplotlib doesn't play nice with it...
 but it's better practice and less work for making the work public and
 accessible and able to be returned to in the future... sigh
+
+
+
+
+
+
+
+some links:
+
+Docker Hub
+https://hub.docker.com/r/tensorflow/tensorflow/
+
+How do I start tensorflow docker jupyter notebook - Stack Overflow
+https://stackoverflow.com/questions/33636925/how-do-i-start-tensorflow-docker-jupyter-notebook
+
+How to Run Jupyter Notebook on Docker | by Shinichi Okada | Towards Data Science
+https://towardsdatascience.com/how-to-run-jupyter-notebook-on-docker-7c9748ed209f
+
+jupyter/tensorflow-notebook Tags | Docker Hub
+https://hub.docker.com/r/jupyter/tensorflow-notebook/tags/
+
+Home Page - Select or create a notebook
+http://localhost:8888/tree?
+
+Prune unused Docker objects | Docker Documentation
+https://docs.docker.com/config/pruning/
+
+gitignore - ignoring any 'bin' directory on a git project - Stack Overflow
+https://stackoverflow.com/questions/1470572/ignoring-any-bin-directory-on-a-git-project
+
+taoketao/activation-zones: Nonlinear activations like tanh in neural networks causes surprising dynamics in how weights adjust.
+https://github.com/taoketao/activation-zones
+
+signal-follows-D2-notebook - Jupyter Notebook
+http://localhost:8000/notebooks/signal-follows-D2-notebook.ipynb
+
+2 sech^2(x) tanh(x) + 6 sech^4(x) tanh(x) - 6 sech^2(x) tanh^3(x) - Wolfram|Alpha
+https://www.wolframalpha.com/input?i=2+sech%5E2%28x%29+tanh%28x%29+%2B+6+sech%5E4%28x%29+tanh%28x%29+-+6+sech%5E2%28x%29+tanh%5E3%28x%29&assumption=%22ClashPrefs%22+-%3E+%7B%22Math%22%7D
+
+New Tab
+about:blank
+
+
