@@ -1,7 +1,16 @@
 # my files to ignore
 __this_is_a_git_repo_eom__
 */figures/*test*
-
+comparing-zone-points/comparing-zone-points-addl-comments--depr.py
+comparing-zone-points/figures/comparing-zone-points-fig04.pdf
+comparing-zone-points/figures/comparing-zone-points-fig04.png
+comparing-zone-points/figures/comparing-zone-points-fig06.pdf
+comparing-zone-points/figures/comparing-zone-points-fig06.png
+comparing-zone-points/figures/comparing-zone-points-fig07.pdf
+comparing-zone-points/figures/comparing-zone-points-fig07.png
+signal-follows-D2-check-experiments/tensorflow-wrapper
+*depr/
+*.swp
 
 
 # Byte-compiled / optimized / DLL files

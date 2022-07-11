@@ -2,6 +2,15 @@ demonstrate that if the noise is zero and weights only move according to a
 consistent signal that d/dt w_ij follows D2(v_i).
 **  consult ...07_July/tensorflow-wrapper/  **
 
+dir contents:
+/tf/: the shared volume for docker & jupyter
+/tf/.run_jupyter.sh: helper script that tensorflow-enabled-docker calls;
+  it actually runs the notebook
+notebook_launcher.sh: run this with bash to launch the notebook
+tensorflow-wrapper: symlinked reference directory for dockerizing notebooks
+
+
+
 Part 1. Baselines.
 - let toy x=[x_1.T x_2.T].T where x_1=[-1]*(J/2) and x_2=[1]*(J/2) in python
   list expansion notation.
