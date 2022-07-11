@@ -33,7 +33,7 @@ colors_ = ['blue', 'cyan', 'lightseagreen', 'blueviolet', 'violet',
            'mediumvioletred',
 #           'gold', #'mediumvioletred',
            'lightseagreen','lightseagreen', 'lightseagreen', 'coral', 'peru', 'maroon',
-           'gray'][::-1]
+           'gray'][::-1]  # https://matplotlib.org/stable/gallery/color/named_colors.html
 if not len(colors_) == len(d):
     raise("please add more/less colors "+','.join([len(colors_), len(d)]))
 

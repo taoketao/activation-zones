@@ -1,0 +1,24 @@
+demonstrate that training noise produces D4-driven weight drift.
+**  consult ...07_July/tensorflow-wrapper/  **
+
+1. Pick the noise source
+- y contradictions: (v_i,y), (v_i,-y) for each v_i in range of interest (e.g. np.linspace(-4,4,800))
+- v_i noise: (v_i+epsilon, y), (v_i-epsilon, y)
+- x noise: k >= 2 of {(x_k,y)}
+- MNIST most overlapping but alternative samples, computed
+  by calculating cosine dist of each 7 x each 9.
+- MNIST batchwise: ( collection of 7s ) before ( collection of 9s ); 
+  batches over balanced mixtures of 7s, 9s; small batches over random 
+  mixtures of 7s, 9x.
+- something involving stochastic gradient descent?
+
+2. Pick the analysis
+- Serial: For each of the above noise sources, apply the backprop gradient
+  from each of the data samples individually (or the different collections
+  in sequence) in different batches. See where each weight or v_i went 
+  based on the two 'symmetric' data batches.
+- Parallel: Don't apply backprop. Simply calculate the difference between the 
+  would-be changes if one batch had been trained on vs. a different one.
+
+
+  

@@ -1,0 +1,41 @@
+demonstrate that if the noise is zero and weights only move according to a
+consistent signal that d/dt w_ij follows D2(v_i).
+**  consult ...07_July/tensorflow-wrapper/  **
+
+Part 1. Baselines.
+- let toy x=[x_1.T x_2.T].T where x_1=[-1]*(J/2) and x_2=[1]*(J/2) in python
+  list expansion notation.
+- Pick weights region of interest R, say (-4,4), and granularity, say 0.01.
+- Pick y_i values of interest Y, e.g. np.linspace(-1,1,9)=[-1,-3/4,...]
+- Pick a network size N.
+
+Split weights into |R|/J many sets of J weights each. Make the small 
+scalar-valued network y=sigma(w.dot(x)). For each individual y \in Y,
+compute the loss for each weight.
+WAIT never mind.
+
+Do away with x and direct w_ij. Instead,
+do simpler proxy: y_hat=sigma(v_i), v_i \in R, \R^1->\R^1.
+Let tensorflow compute the gradient and record it as a data tuple
+( v_i, y_i, sigma, D2 ). 
+Make a subplots grid of y_i x sigma and plot the tuples (v_i, D2(v_i)).
+
+Part 2. Extensions.
+- Extension 1: let the network *learn* for 1 timesteps, 2, 10, 1000.
+  Plot both (v_i(t), D2(v_i(t))) as well as (v_i(0), D2(v_i(0))).
+- Extension 2: let network learn on MNIST(7,9) slightly, somewhat, and 
+  up to a good competitive loss. Then feed it artificial data (grid
+  of 1.0's) and plot weights.dot(x_input) by the gradient that would
+  be applied. Vary hyperparameters for completeness: learning rate,
+  net width J, which nonlinearity, whether {7:-1, 9:1} or {7:1, 9:-1}.
+  * note that a zero-layer network, an 'activated linear map', is 
+  exactly the scenario that inspired all this, that weights will move 
+  infinitely as long as sigma never actually reaches +/- 1.
+ 
+- Extension 3: try a network followed by a linear map. or a network
+  preceded by a linear map, or a two-layered trainable network.
+  (This gets back to exploration territory and is kinda unnecessary.)
+
+To jupyter or to not jupyter... matplotlib doesn't play nice with it...
+but it's better practice and less work for making the work public and
+accessible and able to be returned to in the future... sigh

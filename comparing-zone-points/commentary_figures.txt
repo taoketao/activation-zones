@@ -55,10 +55,11 @@ p=2:        Refers to the f(x)=x/(1+x^2)^(1/2), ie x/sqrt(1+x^2). This curve is
 p=...:      x/(1+|x|^p)^(1/p) is the general pattern. Consider x and p to be 
             reals, and let z^p>0 be defined if z,p>0 for convenience.
             As p->infinity, alpha and beta and delta converge to gamma=1.
-guder:      Defined as arctan(tanh(x))*4/pi, characteristically the Gudermannian function.
-bump:       The integral of a bump function exp( 1/( x^2-1 ))
+guder:      Defined as arctan(tanh(x))*4/pi, characteristically the Gudermannian function (see below)
+bump:       The integral of a bump function exp( 1/( x^2-1 ) )
 exp*:       Basically, take the decreasing function e^-x,x>0 and use it to build a sigmoid. 
             Specifically, f(x)={x>0: 1-e^-x. x<=0: e^x-1} = odd extension of {1-e^-x, x>=0}.
+            Plot in Desmos as -(sign(x)e^(-xsign(x)) - sign(x))
 x-x^2*:     odd extension of {0<x<2: x-x^2/4; else 1}
 xrootx*:    odd extension of { x^(1/x) }, as contrast: it is approx *flat* between [-.2,.2]
 xrootx2:    like xrootx* but nicer; see below
@@ -116,12 +117,14 @@ Raw data:
 'relu':    [None , 0.000, None , None ]
 
 Other:
+
 xrootx2: \sigma(x)=sign(x)*|x|^(1/(1+|x|)), a variant of xrootx that plays a little nicer near 0.
 We basically buffered the exponent's root part so that it doesn't go to 0 exponentially fast near 0. 
 d/dx looks *vaguely* like N(-0.1, 0.1) + N(0.1, 0.1) where N is a bell curve distribution.
            [0.298, 0.561, 1.000, 1.419] 
            (technically, curvature is maximum (infinity) at 0-\epsilon
             and -infinity at 0+\epsilon, \epsilon>0 -> 0 )
+
 Actual Gudermannian function, f(x)=2*arctan(tanh(x/2)):
            [.3699, .6028, 1.0563, 1.4609]
      These values are not related to those of 'Gudder' above in a simple way.
