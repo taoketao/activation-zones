@@ -1,4 +1,5 @@
 # Python 3.5.4
+# run using ipython
 import numpy as np
 import matplotlib.pyplot as plt
 fig,ax=plt.subplots()
@@ -124,7 +125,7 @@ axins1 = ax.inset_axes([0.0, -0.4, 0.4,0.3]) # https://matplotlib.org/stable/gal
 axins1.set_xticks([])
 axins1.set_yticks([])
 axins1.plot([-4,4], [0,0], '--', color=[0.,0.,0.,0.3])
-axins1.plot([-0.004,0.004], [-1.6,1.6], '--', color=[0.,0.,0.,0.3])
+axins1.plot([0,0], [-1.6,1.6], '--', color=[0.,0.,0.,0.3])
 axins1.plot(Range_1, [d2_erf(r) for r in Range_1], '-', color=color1)
 axins1.plot(Range_1, [d4(r) for r in Range_1], '-', color=color2)
 axins1.annotate( r'$v_i$' ,  (0,0), (3.5,-0.4), fontsize=8, color=[0,0,0,0.6]) 
@@ -146,22 +147,22 @@ axins2 = ax.inset_axes([0.6, -0.4, 0.4,0.3]) # https://matplotlib.org/stable/gal
 axins2.set_xticks([])
 axins2.set_yticks([])
 Range_2 = list(np.linspace(0,3,100))
-axins2.plot([0,0.004], [-1.6,1.1], '--', color=[0.,0.,0.,0.3])
+axins2.plot([0,0], [-1.6,1.3], '--', color=[0.,0.,0.,0.3])
 axins2.plot([0,3.3], [0,0], '--', color=[0.,0.,0.,0.3])
 #axins2.plot(Range_2, [d2_erf(r) for r in Range_2], '-', color=[0.,1.,0.,0.5])
 axins2.plot(Range_2, [d2_erf(r) for r in Range_2], '-', color=color1)
 axins2.axvline(0,0,0)
 #axins2.plot(Range_2, [d4(r) for r in Range_2], '-', color=[1.,0.,0.,0.37])
 axins2.plot(Range_2, [d4(r) for r in Range_2], '-', color=color2)
-axins2.annotate( r'$\beta$' ,  (0,0), (.55,.8), fontsize=8) #(0.4,-0.25), (1.6,0.3),
-axins2.plot([.625,.626],[-.2,.2],color=[0.,0.,0.,0.3], linewidth=1)
+axins2.annotate( r'$\beta$' ,  (0,0), (.55,1.05), fontsize=8) #(0.4,-0.25), (1.6,0.3),
+axins2.plot([.625,.625],[-.2,.2],color=[0.,0.,0.,0.3], linewidth=1)
 axins2.annotate( r'-$\alpha$' ,  (0,0), (.27,-1.6), fontsize=8) 
-axins2.plot([.410,.411],[-.2,.2],color=[0.,0.,0.,0.3], linewidth=1)
+axins2.plot([.410,.410],[-.2,.2],color=[0.,0.,0.,0.3], linewidth=1)
 axins2.annotate( r'$\gamma$' ,  (0,0), (.9,.35), fontsize=8) 
-axins2.plot([.95,.96],[-.2,.2],color=[0.,0.,0.,0.3], linewidth=1)
-axins2.plot([.95,.96],[.7,.85],color=[0.,0.,0.,0.3], linewidth=1)
+axins2.plot([.95,.95],[-.2,.2],color=[0.,0.,0.,0.3], linewidth=1)
+#axins2.plot([.95,.95],[.7,.85],color=[0.,0.,0.,0.3], linewidth=1)
 axins2.annotate( r'$\delta$' ,  (0,0), (1.35,.7), fontsize=8) 
-axins2.plot([1.4,1.41],[-.2,.2],color=[0.,0.,0.,0.3], linewidth=1)
+axins2.plot([1.4,1.4],[-.2,.2],color=[0.,0.,0.,0.3], linewidth=1)
 axins2.annotate( r'$v_i$' ,  (0,0), (3.1,-0.35), fontsize=8, color=[0,0,0,0.6]) 
 
 
