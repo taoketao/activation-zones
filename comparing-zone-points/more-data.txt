@@ -8,7 +8,8 @@ erf     0.4478  -2.8144  0.6201  0.4759  0.2426    0.6501   -0.8583  0.9186
 tanh    0.4213  -2.0429  0.6585  0.3847  0.1439    0.7075   -0.7536  0.8707          
 p=2     0.3249  -2.3343  0.5774  0.3248  0.0902    0.7697   -0.626   0.8336        (.5774 sic, desmos)
 exp*    0       -3       0.6931  1/4     0.0208    3/4      -1/6     0           
-arctan  0.3792  -1.7959  0.4119  0.7654  0.0568    0.8103   -0.503   0.7691             
+arctanXX0.3792  -1.7959  0.4119  0.7654  0.0568    0.8103   -0.503   0.7691     <- errors maybe! @@ unscaled?
+arctan  0.3792  -1.2843  0.7654  0.3661           -0.3344   -0.1670           taken w.r.t arctan(x)*2/pi, s.t. (-1,1) span.
 x-x^2*  0       -1.5     0.8453  0.3849  n/a       0        -0.5774  0            
 xrootx* 0.6765  -14.718  0.8322  1.0992  0.08664   0.7463   -0.6429  0.8707        (0.3832, 21.964) lies on the curve. D2(0.3832) is 0.07981
 gudder  0.2836  -2.706   0.4958  0.2805  0.1026    0.7360   -0.6531  0.8246
@@ -55,9 +56,110 @@ with delta also far out. I guess it could be helpful maybe for v_i expected to h
 many large values and a need for large zones closer to equally sized.
 - side observation: when exp* and p=1 are scaled to both's beta peaks align at (0.5,1),
 p=1 unanimously decays faster than exp* does. By a lot!
+- arctan: unlike tanh which when y=0 has D4 grow in magnitude larger than D2 after 1.317
+(which is about 40% of the way between gamma and delta) or erf which has |D4| surpass |D2|
+at 1.152 (also between gamma and delta), arctan has D2(delta) ~= 2.3 times D4(delta) and
+they never cross. In fact, the ratio grows O(N^2). Also interestingly, for tanh, 
+their ratio (ratio of D4/D2) approaches constant (4) while the ratio of erf approaches
+D4(x)/D2(x) -> 4x^2. p=2 approaches 0 like arctan, as do all p values>1 (>0 too) and their
+ratios grow O(N/p). Gudermann: O(1) ratio (->4). Exp*: ratio -> 1. Gudermannian function
+has crossover, where |D4|>|D2| (ie, 0>D2>D4) as vi>0.9902 which is between gamma and delta,
+when we use f(x)=arctan(tanh(x)). With the 2 factor, g(x)=2arctan(tanh(x/2)), the D2/D4
+ratio approaches 1 and (therefore) there is no crossover; |vi|>gamma implies |D2|>|D4|.
+p=1.6687 has ratio peak at 1 (at vi=1.7596) such that larger p have crossover and smaller
+p do not; there can be multiple crossovers; and the crossover while always beyond
+gamma also surpasses delta when p>1.775 approx. arctan(1.483*v_i) has crossover (and 
+crossback) and the first crossover coincides with delta at arctan(1.545*v_i) or so.
+The crossover/crossback pinch to the same point at (1.46, -.296); 1.48286
+
 
 questions: 
 - what is 0.5774 with regard to x^2 or sqrt(x)?
 - is 0.8707 coincidence?
 - does it make sense to make the zone b-c cutoff the point where SNR is 1?
+
+
+
+More data for varying y.
+As y \in [-1,1] (or more) changes, when do special points have interesting interactions?
+Here, we identify two interactions for different sigmoidals: 
+- There are certain y values that, when a sigm(v_i) approaches it as it should,
+  the D4 noise can reach a relative peak, both locally wrt the D4 curve's extrema 
+  as well as being high absolutely wrt other y. And while there is actually a
+  bigger peak on the opposite signed side, corresponding to alpha, this peak
+  overlaps strongly with the peak of the true signal D2.
+- Regardless of y value, there are two fixed points (rot. symmetric about origin)
+  of D4 - that is, the drift experienced by vi is the same here always. 
+  Furthermore, there is a specific |y| that causes the maximal local D4 noise 
+  peak to reach a minimum wrt y.
+When sigma=tanh:
+  - The zero of D2 (the point that receives no gradient from D2 signal)
+    matches the 2nd-highest absolute peak of D4 at +/- 0.4714=v_i. 
+    (ie, for this y value, v_i at this value are most at risk to D4 perturbances.)
+    At this y value, D2_inverse(0)=0.512 (ie D4(.512)=0) and D4(0.5119)=1.711.
+  - As y varies, D4 changes shape but does have two fixed points wrt y
+    at (+/- 0.6585, +/- 1.5396). At y=+/-1.15470, the local peak of D4
+    coincides with this point and achieves it smallest abs value of all y.
+  - At y=0.7535, D2 and D4 intersect at (-1.15470, 0.5171). when y=-.7535,
+    intersect at (1.15,-0.52) likewise. This is for raw unscaled versions:
+    D2=(y-tanh)*D(tanh), D4=D(D(D2)). Notice that 0.6585 is beta.
+  - It seems that for all y, alpha<beta<gamma(<delta) always @ tanh
+When sigma=erf:
+  - D4's fixed point w.r.t. y is (.7071, 1.9872). The y value that makes
+    D4's local peak coincide with this point (a minimum wrt y) is 1.4086.
+  - In contrast to tanh, the v_i coordinate of D4's fixed point wrt y is not 
+    the same as beta, the peaks of D2 when y=0. The y that maximizes 
+    D4 when D2=0 is 0.5503. Here, D2(0.535)=0 and D4(.535)=2.306.
+Sigma is p=2:
+  - (0.5, 1.8432) = (vi, vi/sqrt(1+vi^2)) is a D4 fixed point for all y.
+    D4's local peak is this point when |y|=0.8497.
+  - When y=0.3714, D2 has (0.4,0) and D4 here has (0.4, 1.9882).
+Sigma is exp*: 
+  - D4 have no common fixed points. In fact, for two different y values,
+    D4(v_i; y) don't overlap/intersect at all.
+  - Relatedly, there is no y value for which D2_inverse(0) maximixes
+    D4 over y.
+Arctan, not normalized, ie spans(-pi/2,pi/2) 
+  - one of the two D4 fixed points over y is (0.5774, 1.4614). sic! 
+        What is this number 0.5774!?
+    y=+/-0.9566 is place which causes the D4 to has 
+    its minimal-wrt-y peak be at that point.
+  - unnormalized: |y|=0.4405 is where D2_inverse(0) hits the 
+    local peak of D4; |D4(0.4717)|=1.5492
+  - normalized (arctan(x*2/pi)): y=0.609 -> peaks D4 at (0.5774,0.5923).
+  - normalized: |y|=0.2805 causes |D2_inverse(0)|=0.4715; 
+    |D4(0.4715)|=0.6278
+
+  Strange relationship: 
+    The y value target that maximizes the relative local D4 noise
+    coming from tanh is the same number as the vi weight-mod-x
+    value that reaches the max relative noise peak from arctan.
+    This number is 0.4714.
+
+Other observations when varying y. 
+As |y|->1 from below, alpha still stays near small values while
+beta, gamma, and delta escape to infinity. (duh.)
+
+
+
+
+
+What is this 0.5774? It appears as p=2's beta, x-x^2's D4(beta), and
+the vi for which arctan's D4 is fixed w.r.t. changing y.
+
+for reference
+'''         name        alpha  beta   gamma  delta     '''
+dl.append( {'tanh':    [0.421, 0.658, 1.146, 1.572] } )
+dl.append( {'erf':     [0.488, 0.620, 1.076, 1.456] } )
+dl.append( {'p=2':     [0.325, 0.577, 1.000, 1.376] } )
+dl.append( {'exp*':    [0.001, 0.693, 1.386, 2.079] } )
+dl.append( {'arctan':  [0.379, 0.765, 1.330, 1.847] } )
+dl.append( {'Guder':   [0.284, 0.496, 0.877, 1.228] } )
+dl.append( {'p=1':     [0.001, 0.500, 1.000, 1.500] } )
+dl.append( {'p=1.5':   [0.161, 0.543, 1.000, 1.432] } )
+dl.append( {'p=4.37':  [0.680, 0.681, 1.000, 1.228] } )
+dl.append( {'x-x^2*':  [0.000, 0.845, 2.000, None ] } )
+dl.append( {'xrootx*': [0.676, 0.832, 1.158, 1.462] } )
+dl.append( {'xrootx2': [0.298, 0.561, 1.000, 1.419] } )
+dl.append( {'relu':    [0    , 0    , 0    , 0    ] } )
 

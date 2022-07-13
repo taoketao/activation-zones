@@ -36,7 +36,15 @@ Explanation of what is being plotted.
       forth, instead of progressing via a signal. ('walk' picked intentionally; cf random walks)
       Some sources of training noise I've identified: batch learning, numerical artifacts of 
       learning rate, interdependence of weights on each other over many epochs, or imperfect 
-      data (ie, most obviously, dataset contains contradictory (x,y=1) and (x,y=-1))
+      data (ie, most obviously, dataset contains contradictory (x,y=1) and (x,y=-1)). 
+      Perhaps most 'alarmingly', training noise can come from having specific x inputs
+      that do not directly correlate with y output values; e.g. images with blue skies 
+      might not experience D4 noise for those pixels when classifying flying vs grounded
+      airplanes but discriminating 'orange basketball' or 'toy train' from 'coffee mug'
+      will experience lots of noise from the variety of colors a coffee mug can have (at least).
+      In this case, the first pixel-analyzing layers will receive different inputs
+      to the same weights, causing different v_i=x*w_i, which will cause more D4 
+      noise even when the gradient error signal is unchanged between nearby trials.
 
 What the points represent:
   - alpha: the place where curvature (-D4) is maximal. Weights at this value are most sensitive to training noise.
@@ -55,6 +63,8 @@ p=2:        Refers to the f(x)=x/(1+x^2)^(1/2), ie x/sqrt(1+x^2). This curve is
 p=...:      x/(1+|x|^p)^(1/p) is the general pattern. Consider x and p to be 
             reals, and let z^p>0 be defined if z,p>0 for convenience.
             As p->infinity, alpha and beta and delta converge to gamma=1.
+arctan:     Even though the plain arctan function actually spans (-pi/2, pi/2), the 
+            locations of alpha/beta/etc special points are unaffected.
 guder:      Defined as arctan(tanh(x))*4/pi, characteristically the Gudermannian function (see below)
 bump:       The integral of a bump function exp( 1/( x^2-1 ) )
 exp*:       Basically, take the decreasing function e^-x,x>0 and use it to build a sigmoid. 
