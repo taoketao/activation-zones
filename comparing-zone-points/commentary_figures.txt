@@ -26,7 +26,7 @@ Explanation of what is being plotted.
       error signal. It should be noted that D2 does change shape depending on y_i;
       here, we are only looking at the foundational case, y_i=0.
     - Define D4 := d^2/dv_i^2 (D2). 
-      D4 is related to perturbations of weights from training noise, in contrast
+      D4 is related to perturbations of weights from training noise (see below), in contrast
       to signals. I might informally call this 'drift' or 'diffusion' or 'jitter'.
       Notably, under y_i={-1 w.p. 1/2, +1 w.p. 1/2} noise, this effect is *not* affected 
       by a choice of y_i. I suspect it's true for other kinds of symmetric expected noise
@@ -45,6 +45,19 @@ Explanation of what is being plotted.
       In this case, the first pixel-analyzing layers will receive different inputs
       to the same weights, causing different v_i=x*w_i, which will cause more D4 
       noise even when the gradient error signal is unchanged between nearby trials.
+      - Update 7/16/22: I think I've classified that training noise comes from 3-4 categories:
+      (1) real data noise, the effects of nonseperable and/or incongruent data;
+      (2) algorithmic discretization, via batch learning w/ SGD or discrete learning rate steps;
+      (3) broken symmetry effects, ie v1==v2 =/=> wi1==wi2, which makes their 
+          gradients different s.t. regardless of error or d/dt(error), weights 
+          will still change or ie degrees of freedom of different  wi vectors 
+          that make a given vi for a given x vector;
+      (4) TBD: from learning many outputs of many-featured data in many-layered 
+          networks simultaneously, due to not-yet-identified interactions between 
+          weights & activations both across and within layers. Alternatively,
+          and also TBD, are effects of the structures learned by the networks
+          (e.g. orthonormal eigenbasis weights? all past originally-conceived zone 2?).
+      See notebook (shinebright gold, pg 136) for more thorough details
 
 What the points represent:
   - alpha: the place where curvature (-D4) is maximal. Weights at this value are most sensitive to training noise.

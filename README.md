@@ -15,6 +15,6 @@ Programs:
 
 - *stochastic-process-convergence-sanity-check.py*. I wanted to verify for myself that a random stochastic matrix with any initial distribution will converge to its stationary distribution _exponentially_. If the 'learning rate' is sufficiently small, then that's what happens. As it grows, weights can pass by their eigenpoint but will settle back to them eventually if the rate isn't too high.
 
-- *signal-follows-D2-check-experiments.py*. Verify that weights learning under a clear signal evolve according to D2.
+- *signal-follows-D2-check-experiments.py*. Verify that weights learning under a clear signal evolve according to D2. Results: perfect match! For very simple case, at least. neato.
 
 - *noise-follows-D4-experiments.py*. Verify that weights learning under noise evolve according to D4. This is less obvious so it's somewhere between a verification and a proper experiment.

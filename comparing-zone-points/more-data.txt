@@ -138,7 +138,80 @@ Arctan, not normalized, ie spans(-pi/2,pi/2)
 
 Other observations when varying y. 
 As |y|->1 from below, alpha still stays near small values while
-beta, gamma, and delta escape to infinity. (duh.)
+  beta, gamma, and delta escape to infinity. (duh.)
+When y=0, the D4 noise within gamma is unhelpful, encouraging
+  weights mod x to drift away from target value y. Then, beyond
+  gamma, they are brought back in to the gamma attractor. This
+  is relatively elementary to the analysis. But as |y| goes to 1,
+  we instead observe the following (for now, wlog let y>0): 
+  - As y surpasses the special values in the previous section,
+    ie where y > D2_inv(0) = arg_localmax(D4), the noise starts
+    actually helping and launches well-performing weights to 
+    larger and larger values in the y direction, even if they
+    are past the desired y value to be approached.
+    That is, as y increases, the vi achieving y will receive
+    less and less signal (with the region on the opposite side
+    of y getting the strongest gradient in the right direction)
+    BUT the D4 noise will not lessen the same amount; while gamma
+    goes to infinity, alpha (the peak of D4) increases *slower*
+    than y or sigma_inverse(y) such that the noise signal stays
+    yielding extremifying signals to accurate vi.
+  Actually these values are a little different, maybe: 
+    consider recording data for the y that intersects alpha
+    or the y that intersects the largest ratio or difference 
+    between D2 and D4, each of which will give indications
+    of what the D4 noise does to vi.
+  - On the other side, ie if y>0 then near -y/3 or so, the
+    signals from both D2 and D4 get stronger but overall
+    stay in vaguely similar places (unlike how D2 drops to zero
+    once the function is correct but D4 doesn't.)
+    The competitive interactions between D2 and D4 will change
+    the numbers but not really the overall tendency for 
+    D4 and D2 to cause some weights to settle to actual fixed
+    points on the other side of the objective y (e.g. if tanh
+    and D4=D2 contributions unscaled, then values below 0.133
+    will be sent to -0.745). Even if the D2 signal is several 
+    times stronger than the noise (~5x stronger), there can 
+    still be slipstreams in strange places. * actually, when
+    y=0, slipstreams overtake attractors when D2>8*D4 and 
+    when y=1 slipstreams overtake attractors when D2>2.5*D4;
+    when D2=4*D4, y>0.35 makes slipstreams instead of attractors.
+    When D2>2*D4, then the attractors will all lie on the 
+    side vi<0 -- ie there's a fixed point wrt y @ D2-D4 
+    competitive net influence on weights. Similar with {p=2}, 
+    just the numbers a little fudged (e.g. for no attractors,
+    need D2>10*D4). When erf, same D2=8*D4 @ y=0 and D2=3*D4 @ y=1 
+    and D2=2*D4 (exact) makes attractors appear only at vi<0.
+    arctan not too different. 
+    exp* clearly different but still can get D2-D4-competition-derived 
+    attractors when y=/=0.
+    For all nonlinearities (i think), as y increases from 0, D2
+    at vi=sigma_inverse(y) grows faster than vi=D4_inverse(y) ie
+    when y>0, both D2 and D4 will be >0 at the objective point y
+    (causing, always, unproductive drift in the extremifying 
+    direction). And for all as y increases, D2+D4 will be
+    negative only if the SNR is very high. And since if d/dx at 0
+    is 1 and that is its maximum, then all D2(vi; y) for all y>0
+    is always greater than than zero causing outward drift.
+
+    OK takeaways: Neither D2 nor D4 can create ideal behavior
+    of vi's when |y|>0. As y gets closer to 1, you can permit
+    more noise to prevent attractors from forming on the 
+    opposite side from y. These basins are large, extending from -inf to
+    up to even positive values, but don't extend rightward too much and
+    can be tamed kinda. With a high enough SNR (ie D2 contributions
+    instead of D4), you can prevent attractors from forming altogether,
+    and this SNR varies slightly per nonlinearity. For certain
+    y in between 0 and 1 (often around 0.4-0.7), the D4 noise will 
+    be rather very strong and will launch weights with any noise
+    sensitivity well beyond y even when they calculate y exactly.
+    Gamma scales much faster than y and so there's no help there 
+    to be found. 
+    For a given y target (ie, all the data with that label)
+    and a given nonlinearity, you might be able to estimate SNR by 
+    identifying vi attractors on the opposite side (sign) of y
+    or even by identifying slipstreams / weight fluxes / 
+    instantaneous densities.
 
 
 
@@ -162,4 +235,23 @@ dl.append( {'x-x^2*':  [0.000, 0.845, 2.000, None ] } )
 dl.append( {'xrootx*': [0.676, 0.832, 1.158, 1.462] } )
 dl.append( {'xrootx2': [0.298, 0.561, 1.000, 1.419] } )
 dl.append( {'relu':    [0    , 0    , 0    , 0    ] } )
+
+
+
+
+f(x) = (y_i-f(x))*D(f)(x) with algebraic manipulations 
+can become D(f)(x)= 1/[ 1/(yf(x)) -1 ]
+( solution: ... -(1/y)*(yx+log(1-yx)) which basically looks like
+my halfexp that goes to y=-x as x<<0 and y=e^x as x>>0, but with
+the exponential on the negative part (via log) instead of on positive 
+part; y=1 => plot is -x-logx ~= -x when x<0 and asymptote at x=1 )
+which inspires a new nonlinear sigmoidal: odd extension of 
+{ 1/(1+1/x) | x>=0 }. This has a/b/g/d: 
+0(-inf) / 0.5(.148) / 1(0) / 0.5(.031)
+Altering to 1/(1+x^-a), a>1 yields alpha finite
+a=1.5: * there are extra zeros at 0 and +/- 0.26 *
+.505, .862, 1.438, 1.979
+a=2: .752, 1, 1.51, 1.972; xtra zero: .486, xtra peak: .213
+(get an xrootx* shape that flattens near 0)
+
 

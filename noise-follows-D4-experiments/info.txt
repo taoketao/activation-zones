@@ -1,13 +1,20 @@
 demonstrate that training noise produces D4-driven weight drift.
 **  consult ...07_July/tensorflow-wrapper/  **
+**  see ../comparing-zone-points/commentary_figures.txt @ training noise **
 
 1. Pick the noise source
-- y contradictions: (v_i,y), (v_i,-y) for each v_i in range of interest (e.g. np.linspace(-4,4,800))
-- v_i noise: (v_i+epsilon, y), (v_i-epsilon, y)
-- x noise: k >= 2 of {(x_k,y)}
+   Refresher: drift can come from 3-4 sources: [1] data noise, [2] algorithmic 
+   discretization, [3] broken symmetry, and [4] interal interactions/learned structures.
+   Types [1] and [2] are easy to test with basic cases; [3] should be straight-
+   -forward enough to plot out; most cohesive tests of [1] can come from
+   MNIST/etc, 
+- [1] y contradictions: (v_i,y), (v_i,-y) for each v_i in range of interest (e.g. 
+   np.linspace(-4,4,800)).  Example of type (1) noise.
+- [1] v_i noise: (v_i+epsilon, y), (v_i-epsilon, y)
+- [1] x noise: k >= 2 of {(x_k,y)}
 - MNIST most overlapping but alternative samples, computed
   by calculating cosine dist of each 7 x each 9.
-- MNIST batchwise: ( collection of 7s ) before ( collection of 9s ); 
+- [2] MNIST batchwise: ( collection of 7s ) before ( collection of 9s ); 
   batches over balanced mixtures of 7s, 9s; small batches over random 
   mixtures of 7s, 9x.
 - something involving stochastic gradient descent?
