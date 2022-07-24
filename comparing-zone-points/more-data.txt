@@ -255,3 +255,12 @@ a=2: .752, 1, 1.51, 1.972; xtra zero: .486, xtra peak: .213
 (get an xrootx* shape that flattens near 0)
 
 
+About numbers
+log 2 = 0.69314718056
+1/sqrt(3) = 0.57735026919
+euler-mascheroni constant = 0.5772156649
+integral from 0 to 2^-0.5 of 1/sqrt(1+x^2) = 
+ = integral from 0 to 1/2 of 1/((1-2x^2)sqrt(1-x^2))
+ = ln((2^.5+6^.5)/2) = 1/2[ ln((3^.5+1)/2) + ln((3^.5-1)/2) ]
+ = 0.658478948
+ https://mathsolver.microsoft.com/en/solve-problem/int_{0}^{c{1}{2}}frac{dx}{(1-2x^{2})sqrt{1-x^{2}}}

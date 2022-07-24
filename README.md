@@ -17,4 +17,4 @@ Programs:
 
 - *signal-follows-D2-check-experiments.py*. Verify that weights learning under a clear signal evolve according to D2. Results: perfect match! For very simple case, at least. neato.
 
-- *noise-follows-D4-experiments.py*. Verify that weights learning under noise evolve according to D4. This is less obvious so it's somewhere between a verification and a proper experiment.
+- *noise-follows-D4-experiments.py*. Verify that weights learning under noise evolve according to D4. This is less obvious so it's somewhere between a verification and a proper experiment. Update: Experiments show that noise follows something close to D4 but not exactly. If D2(x) is f(x) d/dx f(x), then D4 is D2(x) d/dx D2(x). Previously, I'd thought D4 was d^2/dx^2 D2(x). I'm unsure why but this is a really cool discovery!
