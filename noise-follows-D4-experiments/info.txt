@@ -36,11 +36,12 @@ demonstrate that training noise produces D4-driven weight drift.
 
  New D4: a 2nd recursive backprop on D2. ie, if d is a differential operator,
  D4 = D2 d D2 = (sds)d(sds) ie s(x)d(s(x))d(s(x)d(s(x)))
- Really the only things that changed are now gamma and beta coincide and D4's
- numbers make more sense (ie, 0 signal when s(x)=y* <=> 0 noise due to signal).
- Still have same # of equilibrium points on either side of the target (unless 
- |target y| >= 1) which seem clearly attractive not repulsive from the 
- empirical plots.
+ The most noticeable qualitative change is that now gamma and beta coincide.  
+ The curves still look qualitatively the same and have the same loose structure
+ D4's numbers make more sense (ie, 0 signal when s(x)=y* <=> 0 noise due to 
+ signal). Still have same # of equilibrium points on either side of the 
+ target (unless |target y| >= 1) which seem clearly attractive not repulsive 
+ from the empirical plots. 
 
  True enough, it might suggest a new kind of calculus for analyzing backprop:
  weights-mod-x receive error signal based on loss function (least squares 
